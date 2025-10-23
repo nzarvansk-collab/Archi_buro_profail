@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEAUTIFUL HOUSES - Архитектурное бюро</title>
+    <style>
+        /* Общие стили */
+        :root {
+            --primary-color: #f0f0f0; /* Нейтральный основной цвет */
+            --secondary-color: #333; /* Темный цвет для текста */
+            --accent-color: #a0a0a0; /* Акцентный цвет */
+            --background-color: #ffffff;
+            --font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--secondary-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        /* Навигационное меню */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-bottom: 1px solid var(--primary-color);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .navbar-logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .navbar-menu {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar-menu li {
+            margin-left: 30px;
+        }
+
+        .navbar-menu a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero секция с изображением */
+        .hero {
+            height: 100vh;
+            position: relative;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            border-radius: 5px;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+        }
+
+        /* Раздел О бюро */
+        #about {
+            background-color: var(--background-color);
+        }
+
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+        
+        .about-image img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Раздел Проекты */
+        #projects {
+            background-color: var(--primary-color);
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .tab-card {
+            background: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+            text-align: center;
+            flex: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .tab-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .tab-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .tab-card-content {
+            padding: 20px;
+        }
+
+        .tab-card h3 {
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Раздел Услуги */
+        #services ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        #services li {
+            background-color: var(--primary-color);
+            padding: 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #services li:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Раздел Отзывы */
+        #testimonials {
+            background-color: var(--background-color);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background-color: var(--primary-color);
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 5px;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+        }
+
+        .testimonial-card cite {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Раздел Контакты */
+        #contact {
+            background-color: var(--primary-color);
+        }
+
+        .contact-content {
+            display: flex;
+            gap: 40px;
+        }
+
+        .contact-info, .contact-form {
+            flex: 1;
+        }
+
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form input, .contact-form textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: var(--font-family);
+        }
+        
+        .contact-form button {
+            background-color: var(--secondary-color);
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* Футер */
+        footer {
+            background-color: var(--secondary-color);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+            }
+
+            .navbar-menu {
+                margin-top: 10px;
+            }
+
+            .navbar-menu li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero p {
+                font-size: 1.2em;
+            }
+
+            .about-content, .contact-content {
+                flex-direction: column;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигационное меню -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#hero" class="navbar-logo">BEAUTIFUL HOUSES</a>
+            <ul class="navbar-menu">
+                <li><a href="#about">О бюро</a></li>
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#testimonials">Отзывы</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Главный экран -->
+    <header id="hero" class="hero">
+        <div class="hero-slider">
+            <!-- Изображения будут добавляться через JavaScript -->
+        </div>
+        <div class="hero-content">
+            <h1>BEAUTIFUL HOUSES</h1>
+            <p>Комфорт и уют в вашем доме</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- О бюро -->
+        <section id="about">
+            <div class="container">
+                <h2>О нашем бюро</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Архитектурное бюро "BEAUTIFUL HOUSES" было основано в 2007 году с целью создания не просто зданий, а пространств для комфортной и счастливой жизни. За годы работы мы реализовали десятки проектов, каждый из которых является отражением индивидуальности его владельца и нашего профессионального подхода.</p>
+                        <p>Мы верим, что дом — это больше, чем просто стены. Это место силы, уюта и вдохновения. Наша команда — это опытные архитекторы, дизайнеры и инженеры, объединенные страстью к своему делу и стремлением к совершенству.</p>
+                    </div>
+                    <div class="about-image">
+                         <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=1974&auto=format&fit=crop" alt="Современный дом">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Проекты -->
+        <section id="projects">
+            <div class="container">
+                <h2>Наши проекты</h2>
+                <div class="tabs">
+                    <div class="tab-card">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" alt="Загородный дом">
+                        <div class="tab-card-content">
+                            <h3>Загородные дома и коттеджи</h3>
+                            <a href="#" class="btn">Подробнее</a>
+                        </div>
+                    </div>
+                    <div class="tab-card">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop" alt="Квартира">
+                        <div class="tab-card-content">
+                            <h3>Квартиры и апартаменты</h3>
+                            <a href="#" class="btn">Подробнее</a>
+                        </div>
+                    </div>
+                    <div class="tab-card">
+                        <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?q=80&w=2070&auto=format&fit=crop" alt="Общественное пространство">
+                        <div class="tab-card-content">
+                            <h3>Общественные пространства</h3>
+                            <a href="#" class="btn">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Услуги -->
+        <section id="services">
+            <div class="container">
+                <h2>Наши услуги</h2>
+                <ul>
+                    <li>Архитектурное проектирование</li>
+                    <li>Дизайн интерьеров</li>
+                    <li>Экстерьер и ландшафтный дизайн</li>
+                    <li>Ремонт и отделка</li>
+                    <li>Комплектация объектов</li>
+                    <li>Авторский надзор</li>
+                    <li>Замер помещений</li>
+                    <li>Фотофиксация этапов работ</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
+        <section id="testimonials">
+            <div class="container">
+                <h2>Отзывы наших клиентов</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <p>"Команда 'BEAUTIFUL HOUSES' превзошла все наши ожидания. Они создали дом нашей мечты, учтя все пожелания и предложив гениальные решения. Профессионализм на высшем уровне!"</p>
+                        <cite>– Семья Ивановых</cite>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Работать с этим бюро было одно удовольствие. Всегда на связи, всегда готовы помочь и объяснить сложные моменты. Дизайн-проект квартиры был выполнен безупречно и в срок."</p>
+                        <cite>– Анна Смирнова</cite>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Благодарим за прекрасный ландшафтный дизайн нашего участка. Теперь это наше любимое место для отдыха. Рекомендуем всем, кто ценит качество и креативный подход."</p>
+                        <cite>– Петр Васильев</cite>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section id="contact">
+            <div class="container">
+                <h2>Свяжитесь с нами</h2>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h3>Наш офис</h3>
+                        <p>г. Москва, ул. Тверская, д. 1</p>
+                        <p>Email: contact@beautifulhouses.com</p>
+                        <p>Телефон: +7 (495) 123-45-67</p>
+                    </div>
+                    <div class="contact-form">
+                        <h3>Оставить заявку</h3>
+                        <form>
+                            <input type="text" name="name" placeholder="Ваше имя" required>
+                            <input type="email" name="email" placeholder="Ваш Email" required>
+                            <textarea name="message" placeholder="Ваше сообщение" rows="5" required></textarea>
+                            <button type="submit" class="btn">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 BEAUTIFUL HOUSES. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript для слайдера
+        document.addEventListener('DOMContentLoaded', function() {
+            const slider = document.querySelector('.hero-slider');
+            const images = [
+                'https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1570129477492-45c003edd2e7?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1558036117-15d82a90b9b1?q=80&w=1968&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=2074&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1598228723793-52759bba239c?q=80&w=1974&auto=format&fit=crop'
+            ];
+            let currentImageIndex = 0;
+
+            images.forEach((src, index) => {
+                const slide = document.createElement('div');
+                slide.classList.add('hero-slide');
+                slide.style.backgroundImage = `url(${src})`;
+                if (index === 0) {
+                    slide.classList.add('active');
+                }
+                slider.appendChild(slide);
+            });
+            
+            const slides = document.querySelectorAll('.hero-slide');
+
+            function changeImage() {
+                slides[currentImageIndex].classList.remove('active');
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                slides[currentImageIndex].classList.add('active');
+            }
+
+            setInterval(changeImage, 2000);
+        });
+    </script>
+</body>
+</html>
